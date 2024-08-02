@@ -1,7 +1,19 @@
 #include "peak.h"
 
 namespace Solution {
-void peak(std::vector<int> const& nums, int target) {
+bool parseArray(std::string const& file_name, std::vector<int>& nums) {
+    std::fstream fs(file_name);
+    if (!fs.is_open()) return false;
+
+    int cur_num;
+    while (fs >> cur_num) {
+        nums.push_back(cur_num);
+    }
+
+    return true;
+}
+void peak(std::vector<int> const& nums, int target,
+          std::vector<std::vector<int>>& subarrays) {
     int nums_size = nums.size();
 
     int prefix_sum = 0, right = 0, left = 0;
@@ -30,16 +42,23 @@ void peak(std::vector<int> const& nums, int target) {
         }
     }
 
-    printResult(nums, min_ids_list);
+    indexsToArray(min_ids_list, nums, subarrays);
 }
-void printResult(std::vector<int> const& nums,
-                     std::vector<std::pair<int, int>> const& subarray_idx) {
-	for (auto& ids : subarray_idx) {
-		std::vector<int> elements;
-		for (int i = ids.first; i <= ids.second; i++) {
-			std::cout << nums[i] << " ";
-		}
-		std::cout << std::endl;
-	}
+void indexsToArray(std::vector<std::pair<int, int>> const& indexs,
+                   std::vector<int> const& nums,
+                   std::vector<std::vector<int>>& subarrays) {
+    for (auto& ids : indexs) {
+        std::vector<int> arr(ids.second - ids.first + 1);
+        std::copy(nums.begin() + ids.first, nums.begin() + ids.second + 1, arr.begin());
+        subarrays.push_back(arr);
+    }
+}
+void printResult(std::vector<std::vector<int>>& subarrays) {
+    for (auto& arr : subarrays) {
+        for (auto& it : arr) {
+            std::cout << it << " ";
+        }
+        std::cout << std::endl;
+    }
 }
 }  // namespace Solution
