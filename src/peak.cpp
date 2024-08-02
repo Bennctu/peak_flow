@@ -1,13 +1,31 @@
 #include "peak.h"
 
 namespace Solution {
+bool isNumber(std::string const& s) {
+    for (auto& it : s) {
+        if (!std::isdigit(it)) return false;
+    }
+
+    return true;
+}
 bool parseArray(std::string const& file_name, std::vector<int>& nums) {
     std::fstream fs(file_name);
-    if (!fs.is_open()) return false;
+    if (!fs.is_open()) {
+        std::cerr << file_name << " can't found" << std::endl;
+        return false;
+    }
 
-    int cur_num;
-    while (fs >> cur_num) {
-        nums.push_back(cur_num);
+    std::string line;
+    int kth_line = 1;
+    while (std::getline(fs, line)) {
+        if (!isNumber(line)) {
+            std::cerr << kth_line << "th line isn't a integer number in "
+                      << file_name << std::endl;
+            return false;
+        }
+
+        nums.push_back(std::stoi(line));
+        kth_line++;
     }
 
     return true;
@@ -49,7 +67,8 @@ void indexsToArray(std::vector<std::pair<int, int>> const& indexs,
                    std::vector<std::vector<int>>& subarrays) {
     for (auto& ids : indexs) {
         std::vector<int> arr(ids.second - ids.first + 1);
-        std::copy(nums.begin() + ids.first, nums.begin() + ids.second + 1, arr.begin());
+        std::copy(nums.begin() + ids.first, nums.begin() + ids.second + 1,
+                  arr.begin());
         subarrays.push_back(arr);
     }
 }

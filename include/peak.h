@@ -6,6 +6,7 @@
 #include <vector>
 
 namespace Solution {
+bool isNumber(const std::string& s);
 bool parseArray(std::string const& file_name, std::vector<int>& nums);
 void peak(std::vector<int> const& nums, int target,
           std::vector<std::vector<int>>& subarrays);

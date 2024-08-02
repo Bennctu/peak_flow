@@ -4,8 +4,10 @@
 int main(int argc, char const* argv[]) {
     // std::cout << "Standard: " << __cplusplus << std::endl;
     if (argc < 3) {
-        std::cerr << "Please input arguments, ex:" << std::endl
-                  << "peak 80 test.txt" << std::endl;
+        std::cerr << "Please input arguments: specific number and the location "
+                     "of test.txt, ex:"
+                  << std::endl
+                  << "./peak 80 test.txt" << std::endl;
         return EXIT_FAILURE;
     }
 
