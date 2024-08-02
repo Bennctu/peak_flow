@@ -5,8 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CXX_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message("build type:" ${CMAKE_BUILD_TYPE})
-
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
   message("build type:" ${CMAKE_BUILD_TYPE})
@@ -38,4 +36,3 @@ target_link_libraries(peak
   PUBLIC
   ${PROJECT_NAME}
 )
-# add_subdirectory(./testing)
