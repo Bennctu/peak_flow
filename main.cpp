@@ -7,7 +7,7 @@ int main(int argc, char const* argv[]) {
         std::cerr << "Please input arguments: specific number and the location "
                      "of test.txt, ex:"
                   << std::endl
-                  << "./peak 80 test.txt" << std::endl;
+                  << "./peak 80 ../test.txt" << std::endl;
         return EXIT_FAILURE;
     }
 
