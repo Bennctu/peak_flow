@@ -7,8 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
-  message("build type:" ${CMAKE_BUILD_TYPE})
 endif()
+
+message("build type:" ${CMAKE_BUILD_TYPE})
 
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   set(CMAKE_CXX_FLAGS "-std=c++20 -g3 -Wall")
@@ -31,8 +32,9 @@ target_include_directories(${PROJECT_NAME}
     ${LINK_INCLUDE_DIRS}
 )
 
+# exe
 add_executable(peak ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 target_link_libraries(peak
-  PUBLIC
+  PRIVATE
   ${PROJECT_NAME}
 )
