@@ -11,7 +11,8 @@ bool isNumber(std::string const& s) {
 bool parseArray(std::string const& file_name, std::vector<int>& nums) {
     std::fstream fs(file_name);
     if (!fs.is_open()) {
-        std::cerr << file_name << " can't found" << std::endl;
+        std::cerr << "[Solution::parseArray]:" << file_name << " can't found"
+                  << std::endl;
         return false;
     }
 
@@ -19,7 +20,8 @@ bool parseArray(std::string const& file_name, std::vector<int>& nums) {
     int kth_line = 1;
     while (std::getline(fs, line)) {
         if (!isNumber(line)) {
-            std::cerr << kth_line << "th line isn't a integer number in "
+            std::cerr << "[Solution::parseArray]:" << kth_line
+                      << "th line isn't a non-negative integer number in "
                       << file_name << std::endl;
             return false;
         }
@@ -28,15 +30,31 @@ bool parseArray(std::string const& file_name, std::vector<int>& nums) {
         kth_line++;
     }
 
+    if (nums.empty()) {
+        std::cerr << "[Solution::parseArray]:Please give a non-negative number "
+                     "in text file"
+                  << std::endl;
+        return false;
+    }
+
     return true;
 }
 void peak(std::vector<int> const& nums, int target,
           std::vector<std::vector<int>>& subarrays) {
     int nums_size = nums.size();
+    std::vector<std::pair<int, int>> min_ids_list;
+
+    auto min_iter = std::min_element(nums.begin(), nums.end());
+    if (target <= *min_iter) {
+        for (int i = 0; i < nums_size; i++) {
+            min_ids_list.push_back({i, i});
+        }
+        indexsToArray(min_ids_list, nums, subarrays);
+        return;
+    }
 
     int prefix_sum = 0, right = 0, left = 0;
     int min_size = nums_size + 1;
-    std::vector<std::pair<int, int>> min_ids_list = {{0, nums_size}};
     while (right < nums_size) {
         // step1: find the right bound
         while (prefix_sum < target && right < nums_size) {
@@ -60,7 +78,10 @@ void peak(std::vector<int> const& nums, int target,
         }
     }
 
-    indexsToArray(min_ids_list, nums, subarrays);
+    if (min_ids_list.empty())
+        std::cout << "Not found subarray" << std::endl;
+    else
+        indexsToArray(min_ids_list, nums, subarrays);
 }
 void indexsToArray(std::vector<std::pair<int, int>> const& indexs,
                    std::vector<int> const& nums,
