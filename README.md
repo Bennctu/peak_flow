@@ -1,5 +1,5 @@
 # Peak Flow
-Find the shortest continuous subsequences with the summation which is equal or greater than specific number
+Find the shortest continuous subsequences with the summation which is equal or greater than specific number. In peak.cpp, we implement a **sliding window method** to update the left index and right index of the subarray. We know that sliding window method can reach O(n).
 
 ## Docker
 ```shell
@@ -22,3 +22,5 @@ cmake .. && make -j7
 # ex: ./peak 80 ../test.txt
 ```
 
+## Result
+![image](Demo.gif)
